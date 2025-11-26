@@ -1,0 +1,227 @@
+{
+  "info": {
+    "name": "Har Ghar Pooja API",
+    "description": "Complete API collection for AsthaSetu platform",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "Register User",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "url": "{{base_url}}/api/auth/register",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Test User\",\n  \"phone\": \"919999888877\",\n  \"password\": \"Test@123\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "url": "{{base_url}}/api/auth/login",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"phone\": \"919999999999\",\n  \"password\": \"Admin@123\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Get Current User",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Authorization", "value": "Bearer {{token}}"}],
+            "url": "{{base_url}}/api/auth/me"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Pujas",
+      "item": [
+        {
+          "name": "Get All Pujas",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/api/pujas"
+          }
+        },
+        {
+          "name": "Create Puja (Admin)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{admin_token}}"}
+            ],
+            "url": "{{base_url}}/api/admin/pujas",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name_local\": \"नया पूजन\",\n  \"name_en\": \"New Puja\",\n  \"description\": \"Test puja\",\n  \"min_price\": 1100,\n  \"max_price\": 5100,\n  \"default_price\": 2100,\n  \"is_virtual\": false\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Bookings",
+      "item": [
+        {
+          "name": "Create Booking",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{token}}"}
+            ],
+            "url": "{{base_url}}/api/bookings",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"puja_type_id\": \"{{puja_id}}\",\n  \"pandit_id\": \"{{pandit_id}}\",\n  \"scheduled_at\": \"2025-11-05T09:00:00+05:30\",\n  \"address\": \"123 Temple Street, Mumbai\",\n  \"is_virtual\": false\n}"
+            }
+          }
+        },
+        {
+          "name": "Get My Bookings",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Authorization", "value": "Bearer {{token}}"}],
+            "url": "{{base_url}}/api/bookings/my-bookings"
+          }
+        },
+        {
+          "name": "Cancel Booking",
+          "request": {
+            "method": "PATCH",
+            "header": [{"key": "Authorization", "value": "Bearer {{token}}"}],
+            "url": "{{base_url}}/api/bookings/{{booking_id}}/cancel"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Pandits",
+      "item": [
+        {
+          "name": "Get Approved Pandits",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/api/pandits"
+          }
+        },
+        {
+          "name": "Apply as Pandit",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{token}}"}
+            ],
+            "url": "{{base_url}}/api/pandits/apply",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"city\": \"Delhi\",\n  \"state\": \"Delhi\",\n  \"bio\": \"Experienced pandit with 10 years experience\"\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Admin",
+      "item": [
+        {
+          "name": "Get Dashboard Stats",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Authorization", "value": "Bearer {{admin_token}}"}],
+            "url": "{{base_url}}/api/admin/stats"
+          }
+        },
+        {
+          "name": "Approve Pandit",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{admin_token}}"}
+            ],
+            "url": "{{base_url}}/api/admin/pandits/{{pandit_id}}/approve",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"approved\": true\n}"
+            }
+          }
+        },
+        {
+          "name": "Get All Pandits",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Authorization", "value": "Bearer {{admin_token}}"}],
+            "url": "{{base_url}}/api/admin/pandits"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Chatbot",
+      "item": [
+        {
+          "name": "Ask Question",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "url": "{{base_url}}/api/chatbot",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"question\": \"What puja should I perform for prosperity?\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Get Recommendations",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "url": "{{base_url}}/api/chatbot/recommend",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"purpose\": \"peace and prosperity\",\n  \"budget_min\": 2000,\n  \"budget_max\": 10000\n}"
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8000"
+    },
+    {
+      "key": "token",
+      "value": "your_access_token_here"
+    },
+    {
+      "key": "admin_token",
+      "value": "admin_access_token_here"
+    },
+    {
+      "key": "puja_id",
+      "value": "uuid_of_puja"
+    },
+    {
+      "key": "pandit_id",
+      "value": "uuid_of_pandit"
+    },
+    {
+      "key": "booking_id",
+      "value": "uuid_of_booking"
+    }
+  ]
+}
